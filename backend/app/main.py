@@ -1,19 +1,18 @@
 from fastapi import FastAPI
-from sqlalchemy import text
 
-from app.database import engine
+from app.database import Base, engine
+from app.models.user import User
+from app.routes.auth import router as auth_router
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="AI Career Assistant"
 )
 
+app.include_router(auth_router)
+
 
 @app.get("/")
 def root():
-
-    with engine.connect() as conn:
-        conn.execute(text("SELECT 1"))
-
-    return {
-        "message": "Database Connected Successfully"
-    }
+    return {"message": "AI Career Assistant"}

@@ -1,0 +1,25 @@
+passlib[bcrypt]
+bcrypt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# {
+#   "name": "Lavanya",
+#   "email": "lavanya@gmail.com",
+#   "password": "123456"
+# }

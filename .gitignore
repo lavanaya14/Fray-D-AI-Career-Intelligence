@@ -1,0 +1,30 @@
+# Environment variables
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+.venv/
+venv/
+
+# Uploaded resumes/files
+backend/uploads/
+
+# Node
+node_modules/
+
+# Frontend build
+dist/
+build/
+
+# Vite local environment
+frontend/ai-career-frontend/.env
+frontend/ai-career-frontend/.env.local
+
+# IDE
+.vscode/
+.idea/

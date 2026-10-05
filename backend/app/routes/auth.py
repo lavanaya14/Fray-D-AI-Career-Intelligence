@@ -37,15 +37,56 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
     return new_user
 
+# @router.post("/login")
+# def login(
+#     form_data: OAuth2PasswordRequestForm = Depends(),
+#     db: Session = Depends(get_db)
+# ):
+
+#     user = db.query(User).filter(
+#         User.email == form_data.username
+#     ).first()
+
+#     if not user:
+#         raise HTTPException(
+#             status_code=400,
+#             detail="User not found"
+#         )
+
+#     if not verify_password(
+#         form_data.password,
+#         user.password_hash
+#     ):
+#         raise HTTPException(
+#             status_code=401,
+#             detail="Incorrect password"
+#         )
+ 
+    
+#     access_token = create_access_token(
+#     data={"sub": user.email}
+# )
+
+#     return {
+#            "access_token": access_token,  
+#            "token_type": "bearer"
+# }
+
+
 @router.post("/login")
 def login(
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db)
 ):
 
+    print("USERNAME RECEIVED =", form_data.username)
+    print("PASSWORD RECEIVED =", form_data.password)
+
     user = db.query(User).filter(
         User.email == form_data.username
     ).first()
+
+    print("USER FOUND =", user)
 
     if not user:
         raise HTTPException(
@@ -58,19 +99,23 @@ def login(
         user.password_hash
     ):
         raise HTTPException(
-            status_code=400,
-            detail="Wrong password"
+            status_code=401,
+            detail="Incorrect password"
         )
 
-    token = create_access_token(
+    access_token = create_access_token(
         data={"sub": user.email}
     )
 
     return {
-        "access_token": token,
-        "token_type": "bearer"
+        "access_token": access_token,
+        "token_type": "bearer",
+         "user": {
+             "id": user.id,
+             "name": user.name,
+             "email": user.email
+         }
     }
-    
     
 @router.get("/profile")
 def profile(
